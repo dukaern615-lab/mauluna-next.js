@@ -49,10 +49,6 @@
 Create `.env.local` file with:
 ```env
 DATABASE_URL=postgresql://neondb_owner:npg_Nm9nkt8SYQZi@ep-soft-bar-agptvioe-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-AWS_ACCESS_KEY_ID=AKIAZV3GSEFYAHZHJOH3
-AWS_SECRET_ACCESS_KEY=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
-AWS_REGION=eu-north-1
-AWS_S3_BUCKET_NAME=mauluna-immobiliare-photobucket
 RESEND_API_KEY=re_4YWGnPgh_Mq867tg553vNXQE81TZB4zSo
 JWT_SECRET=your-secret-key-change-in-production
 JWT_ADMIN_SECRET=your-admin-secret-key-change-in-production
