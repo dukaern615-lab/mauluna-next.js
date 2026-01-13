@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     url: "https://mauluna.it/",
     title: "MAULUNA IMMOBILIARE - Immobiliare Premium a Roma | 0% Commissioni",
     description: "Trova la tua proprietà perfetta a Roma con MAULUNA IMMOBILIARE. Direttamente dai proprietari, 0% commissioni. Appartamenti, case, ville in vendita e affitto in tutte le zone di Roma.",
-    images: ["https://mauluna-next-js.vercel.app/og-image.jpg"],
+    images: ["https://mauluna.it/og-image.jpg"],
     locale: "it_IT",
     siteName: "MAULUNA IMMOBILIARE",
   },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MAULUNA IMMOBILIARE - Immobiliare Premium a Roma | 0% Commissioni",
     description: "Trova la tua proprietà perfetta a Roma con MAULUNA IMMOBILIARE. Direttamente dai proprietari, 0% commissioni. Appartamenti, case, ville in vendita e affitto in tutte le zone di Roma.",
-    images: ["https://mauluna-next-js.vercel.app/og-image.jpg"],
+    images: ["https://mauluna.it/og-image.jpg"],
   },
   other: {
     "geo.region": "IT-RM",
