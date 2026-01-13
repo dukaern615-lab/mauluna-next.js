@@ -11,10 +11,9 @@
   package = "@netlify/plugin-nextjs"
 
 # Environment variables (these will be used during build)
+# Note: Secrets should be set in Netlify UI (Site settings → Environment variables)
+# NOT hardcoded here for security reasons
 [build.environment]
-  NEXT_PUBLIC_SUPABASE_URL = "https://mzjrywhxgqddptdxecsx.supabase.co"
-  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16anJ5d2h4Z3FkZHB0ZHhlY3N4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwMTQzOTMsImV4cCI6MjA4MDU5MDM5M30.p6mvqJT1ptqnX1TDJQrJBBAV4hSovLwUpay5ZHFBKpI"
-  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY = "AIzaSyDP-k1W6Hlzp8RZi6x4cvjoV0Pfwqb8I4g"
   NODE_VERSION = "20.9.0"
 
 # Domain redirects - Redirect all other domains to main domain
