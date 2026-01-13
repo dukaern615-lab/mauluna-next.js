@@ -1,0 +1,29 @@
+# robots.txt for MAULUNA IMMOBILIARE
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /profilo/
+Disallow: /preferiti/
+Disallow: /messaggi/
+Disallow: /notifiche/
+Disallow: /pubblica-annuncio/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /accedi
+Disallow: /registrati
+Disallow: /reimposta-password
+
+# Allow property pages and images
+Allow: /annuncio/
+Allow: /immobili/
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+
+# Sitemap
+Sitemap: https://mauluna.it/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 0.5
