@@ -18,11 +18,29 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { data: property, error } = await supabase
-      .from('properties')
-      .select('*')
-      .eq('id', propertyId)
-      .single();
+    // Query property - handle both full UUID and short ID (8 chars from slug)
+    let property = null;
+    let error = null;
+    
+    // If it's a full UUID (36 chars with hyphens), use exact match
+    if (propertyId.length === 36 && propertyId.includes('-')) {
+      const result = await supabase
+        .from('properties')
+        .select('*')
+        .eq('id', propertyId)
+        .single();
+      property = result.data;
+      error = result.error;
+    } else {
+      // Short ID (8 chars) - find UUID ending with this ID
+      const result = await supabase
+        .from('properties')
+        .select('*')
+        .ilike('id', `%${propertyId}`)
+        .single();
+      property = result.data;
+      error = result.error;
+    }
 
     if (error || !property) {
       return {
