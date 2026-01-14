@@ -14,7 +14,7 @@ export function loadGoogleMaps(): Promise<void> {
       return;
     }
 
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDP-k1W6Hlzp8RZi6x4cvjoV0Pfwqb8I4g';
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     
     if (!apiKey) {
       reject(new Error('NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not set in environment variables'));
