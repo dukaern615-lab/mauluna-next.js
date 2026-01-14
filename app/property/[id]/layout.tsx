@@ -2,9 +2,10 @@ import { Metadata } from 'next';
 import { createClient } from '@supabase/supabase-js';
 import { extractPropertyId, getPropertyUrl } from '@/config/domain';
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
-    const propertyId = extractPropertyId(params.id);
+    const { id } = await params;
+    const propertyId = extractPropertyId(id);
     
     if (!propertyId) {
       return {
@@ -42,13 +43,18 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       property = result.data;
       error = result.error;
     } else {
-      // Short ID (8 chars) - find UUID ending with this ID using text cast
+      // Short ID (8 chars) - fetch all properties and find matching one
+      // Supabase JS doesn't support id::text casting, so we filter in code
       const result = await supabase
         .from('properties')
-        .select(selectQuery)
-        .filter('id::text', 'ilike', `%${propertyId}`)
-        .single();
-      property = result.data;
+        .select(selectQuery);
+      
+      if (result.data && Array.isArray(result.data)) {
+        // Find property where UUID ends with the short ID
+        property = result.data.find((p: any) => 
+          p.id && p.id.replace(/-/g, '').endsWith(propertyId.toLowerCase())
+        ) || null;
+      }
       error = result.error;
     }
 
