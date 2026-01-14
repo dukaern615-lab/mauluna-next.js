@@ -18,25 +18,35 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Query property - handle both full UUID and short ID (8 chars from slug)
+    // Query property WITH images using nested select
     let property = null;
     let error = null;
+    
+    // Select property with its images from property_images table
+    const selectQuery = `
+      *,
+      property_images (
+        image_url,
+        is_primary,
+        display_order
+      )
+    `;
     
     // If it's a full UUID (36 chars with hyphens), use exact match
     if (propertyId.length === 36 && propertyId.includes('-')) {
       const result = await supabase
         .from('properties')
-        .select('*')
+        .select(selectQuery)
         .eq('id', propertyId)
         .single();
       property = result.data;
       error = result.error;
     } else {
-      // Short ID (8 chars) - find UUID ending with this ID
+      // Short ID (8 chars) - find UUID ending with this ID using text cast
       const result = await supabase
         .from('properties')
-        .select('*')
-        .ilike('id', `%${propertyId}`)
+        .select(selectQuery)
+        .filter('id::text', 'ilike', `%${propertyId}`)
         .single();
       property = result.data;
       error = result.error;
@@ -49,15 +59,32 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       };
     }
 
-    // Format price
-    const priceText = property.type === 'sale' 
-      ? `€${property.price.toLocaleString('it-IT')}` 
-      : `€${property.price.toLocaleString('it-IT')}/mese`;
+    // Format price - database uses 'listing_type' (buy/rent)
+    const listingType = property.listing_type || 'rent';
+    const priceText = listingType === 'buy' 
+      ? `€${Number(property.price).toLocaleString('it-IT')}` 
+      : `€${Number(property.price).toLocaleString('it-IT')}/mese`;
 
-    // Get property image or fallback
-    const imageUrl = property.images && property.images.length > 0
-      ? property.images[0]
-      : 'https://mauluna.it/og-image.jpg';
+    // Get property image from property_images table
+    // Sort by display_order and get primary image or first image
+    let imageUrl = 'https://mauluna.it/og-image.jpg';
+    
+    if (property.property_images && Array.isArray(property.property_images) && property.property_images.length > 0) {
+      // Sort by display_order
+      const sortedImages = property.property_images
+        .filter((img: any) => img && img.image_url)
+        .sort((a: any, b: any) => (a.display_order || 0) - (b.display_order || 0));
+      
+      // Prefer primary image, otherwise use first image
+      const primaryImage = sortedImages.find((img: any) => img.is_primary);
+      const firstImage = sortedImages[0];
+      
+      if (primaryImage?.image_url) {
+        imageUrl = primaryImage.image_url;
+      } else if (firstImage?.image_url) {
+        imageUrl = firstImage.image_url;
+      }
+    }
 
     // Create description
     const description = property.description 
