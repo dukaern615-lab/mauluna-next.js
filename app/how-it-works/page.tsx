@@ -1,6 +1,5 @@
 'use client';
 
-
 import Header from '@/components/feature/Header';
 import Footer from '@/components/feature/Footer';
 

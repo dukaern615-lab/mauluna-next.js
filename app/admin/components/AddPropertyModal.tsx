@@ -1181,7 +1181,7 @@ export default function AddPropertyModal({ isOpen, onClose, onSuccess }: AddProp
             });
 
             if (suggestionsContainer) {
-              suggestionsContainer.appendChild(item);
+            suggestionsContainer.appendChild(item);
             }
           });
 

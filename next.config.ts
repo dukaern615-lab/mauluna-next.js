@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
     return [
       { source: '/immobili', destination: '/properties' },
       { source: '/annuncio/:path*', destination: '/property/:path*' },
-      { source: '/pubblica-annuncio', destination: '/add-listing' },
       { source: '/risultati-ricerca', destination: '/search-results' },
       { source: '/chi-siamo', destination: '/about' },
       { source: '/contatti', destination: '/contact' },

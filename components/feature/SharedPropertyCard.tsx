@@ -2078,7 +2078,7 @@ const SharedPropertyCard = ({ property, inlineModals = false }: SharedPropertyCa
                   {favoriteProcessing ? (
                     <i className="ri-loader-4-line animate-spin mr-1 text-xs"></i>
                   ) : (
-                    <i className={`${isFavorite ? 'ri-heart-fill' : 'ri-heart-line'} mr-1 text-xs`}></i>
+                  <i className={`${isFavorite ? 'ri-heart-fill' : 'ri-heart-line'} mr-1 text-xs`}></i>
                   )}
                   Salva
                 </button>

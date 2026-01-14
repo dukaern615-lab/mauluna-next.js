@@ -436,28 +436,28 @@ export default function PropertyDetailPage() {
         const { loadGoogleMaps } = await import('@/utils/loadGoogleMaps');
         await loadGoogleMaps();
         
-        // Wait for Google Maps API to load with timeout
-        const waitForGoogle = () => {
-          return new Promise<void>((resolve, reject) => {
-            let attempts = 0;
-            const maxAttempts = 50; // 5 seconds max
-            const check = () => {
-              if (typeof google !== 'undefined' && google.maps) {
-                resolve();
-              } else if (attempts >= maxAttempts) {
-                reject(new Error('Google Maps API failed to load'));
-              } else {
-                attempts++;
-                setTimeout(check, 100);
-              }
-            };
-            check();
-          });
-        };
+      // Wait for Google Maps API to load with timeout
+      const waitForGoogle = () => {
+        return new Promise<void>((resolve, reject) => {
+          let attempts = 0;
+          const maxAttempts = 50; // 5 seconds max
+          const check = () => {
+            if (typeof google !== 'undefined' && google.maps) {
+              resolve();
+            } else if (attempts >= maxAttempts) {
+              reject(new Error('Google Maps API failed to load'));
+            } else {
+              attempts++;
+              setTimeout(check, 100);
+            }
+          };
+          check();
+        });
+      };
 
         await waitForGoogle();
         
-        if (!mapRef.current) return;
+          if (!mapRef.current) return;
           
           // Clear any existing map instance
           if (mapInstanceRef.current) {
@@ -490,7 +490,7 @@ export default function PropertyDetailPage() {
           mapInstanceRef.current = map;
           setMapLoading(false);
       } catch (error) {
-        setMapLoading(false);
+          setMapLoading(false);
       }
     };
 
@@ -791,6 +791,54 @@ export default function PropertyDetailPage() {
               city: property.city,
               sqm: property.sqm
             }} />
+
+            {/* Structured Data Schema for Google Search Results */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "RealEstateListing",
+                  "name": property.title,
+                  "description": property.description || `${property.title} in ${property.zone}, Roma`,
+                  "url": `https://mauluna.it/annuncio/${property.id}`,
+                  "image": property.images || [],
+                  "offers": {
+                    "@type": "Offer",
+                    "price": property.price,
+                    "priceCurrency": "EUR",
+                    "availability": "https://schema.org/InStock",
+                    "priceSpecification": {
+                      "@type": "UnitPriceSpecification",
+                      "price": property.price,
+                      "priceCurrency": "EUR",
+                      "unitText": property.type === 'rent' ? 'MONTH' : 'TOTAL'
+                    }
+                  },
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Roma",
+                    "addressRegion": "Lazio",
+                    "addressCountry": "IT",
+                    "streetAddress": property.address || property.zone
+                  },
+                  "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": property.latitude || 41.9028,
+                    "longitude": property.longitude || 12.4964
+                  },
+                  "numberOfRooms": property.rooms || 1,
+                  "numberOfBathroomsTotal": property.bathrooms || 1,
+                  "floorSize": {
+                    "@type": "QuantitativeValue",
+                    "value": property.sqm || 0,
+                    "unitCode": "MTK"
+                  },
+                  "datePosted": property.created_at,
+                  "dateModified": property.updated_at
+                })
+              }}
+            />
 
         {/* Breadcrumbs for SEO */}
         <Breadcrumbs 

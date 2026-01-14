@@ -203,7 +203,7 @@ export default function RootLayout({
       <body>
         <I18nInit />
         <Providers>
-          {children}
+            {children}
         </Providers>
         {/* Google Maps API will be loaded dynamically via PropertyMap component (same as 111.com) */}
         
