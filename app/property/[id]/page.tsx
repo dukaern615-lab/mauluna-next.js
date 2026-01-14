@@ -10,7 +10,6 @@ import { propertyFunctions, shareFunctions } from '@/lib/supabaseFunctions';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/useToast';
 import { transformProperty } from '@/utils/propertyTransform';
-import PropertyMetaTags from '@/components/feature/PropertyMetaTags';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getPropertyUrl, extractPropertyId } from '@/config/domain';
 
@@ -775,23 +774,6 @@ export default function PropertyDetailPage() {
           </div>
         ) : (
           <>
-            {/* Dynamic Meta Tags for Social Sharing */}
-            <PropertyMetaTags property={{
-              id: property.id,
-              title: property.title,
-              description: property.description,
-              price: property.price,
-              type: property.type,
-              zone: property.zone,
-              images: property.images,
-              address: property.address,
-              subSubCategory: property.subSubCategory,
-              subCategory: property.subCategory,
-              category: property.category,
-              city: property.city,
-              sqm: property.sqm
-            }} />
-
             {/* Structured Data Schema for Google Search Results */}
             <script
               type="application/ld+json"
