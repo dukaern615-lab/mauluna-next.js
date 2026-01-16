@@ -1066,17 +1066,8 @@ const SharedPropertyCard = ({ property, inlineModals = false }: SharedPropertyCa
         const reportText = `SEGNALAZIONE ABUSIVA\n\nAnnuncio: ${property.title}\nID: ${property.id}\nMotivo: ${reportReason}\nDescrizione: ${reportDescription || 'Nessuna descrizione aggiuntiva'}`;
         
         try {
-          window.open(`mailto:info@mauluna-immobiliare.com?subject=Segnalazione Abusiva - Annuncio ${property.id}&body=${encodeURIComponent(reportText)}`);
+          window.open(`mailto:info@mauluna.it?subject=Segnalazione Abusiva - Annuncio ${property.id}&body=${encodeURIComponent(reportText)}`);
         } catch (emailError) {
-          // Silent fail
-        }
-
-        try {
-          const whatsappWindow = window.open(`https://wa.me/393401234567?text=${encodeURIComponent(reportText)}`, '_blank');
-          if (!whatsappWindow) {
-            toast.warning('Popup bloccato. Consenti i popup per aprire WhatsApp.');
-          }
-        } catch (whatsappError) {
           // Silent fail
         }
         
@@ -1628,17 +1619,8 @@ const SharedPropertyCard = ({ property, inlineModals = false }: SharedPropertyCa
         const reportText = `SEGNALAZIONE ABUSIVA\n\nAnnuncio: ${property.title}\nID: ${property.id}\nMotivo: ${reportReason}\nDescrizione: ${reportDescription || 'Nessuna descrizione aggiuntiva'}`;
         
         try {
-          window.open(`mailto:info@mauluna-immobiliare.com?subject=Segnalazione Abusiva - Annuncio ${property.id}&body=${encodeURIComponent(reportText)}`);
+          window.open(`mailto:info@mauluna.it?subject=Segnalazione Abusiva - Annuncio ${property.id}&body=${encodeURIComponent(reportText)}`);
         } catch (emailError) {
-          // Silent fail
-        }
-
-        try {
-          const whatsappWindow = window.open(`https://wa.me/393401234567?text=${encodeURIComponent(reportText)}`, '_blank');
-          if (!whatsappWindow) {
-            toast.warning('Popup bloccato. Consenti i popup per aprire WhatsApp.');
-          }
-        } catch (whatsappError) {
           // Silent fail
         }
         
